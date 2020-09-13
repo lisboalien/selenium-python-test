@@ -84,4 +84,4 @@ Use Ctrl-C to kill them.
 This project is made by **Aline de Farias Lisboa** or "lisboalien" in social media.
 
 * Twitter: [@Lisboalien](https://twitter.com/Lisboalien)
-* LinkedIn: [aline lisboa](https://www.linkedin.com/in/alinelisboa/)
+* LinkedIn: [Aline Lisboa](https://www.linkedin.com/in/alinelisboa/)
