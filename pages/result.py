@@ -12,6 +12,7 @@ class DuckDuckGoResultPage:
 
     RESULT_LINKS = (By.CSS_SELECTOR, 'a.result__a')
     SEARCH_INPUT = (By.ID, 'search_form_input')
+    MORE_RESULTS_BUTTON = (By.CSS_SELECTOR, 'a.result--more__btn')
 
     # Initializer
 
@@ -32,3 +33,6 @@ class DuckDuckGoResultPage:
 
     def title(self):
         return self.browser.title
+
+    def more_results_button_click(self):
+        self.browser.find_element(*self.MORE_RESULTS_BUTTON).click()

@@ -25,13 +25,6 @@ def search_phrase(browser, initial):
 
 # Then Steps
 
-@then(parsers.parse('the search result query is "{result}"'))
-@then('the search result query is "<result>"')
-def results_have_one(browser, result):
-    result_page = DuckDuckGoResultPage(browser)
-    assert result == result_page.search_input_value()
-
-
 @then('the search result query, link and title is like the searched term')
 def check_search_results(browser, initial):
     results_have_one(browser, initial)
@@ -39,7 +32,12 @@ def check_search_results(browser, initial):
     result_text(browser, initial)
 
 
-# And Steps
+@then(parsers.parse('the search result query is "{result}"'))
+@then('the search result query is "<result>"')
+def results_have_one(browser, result):
+    result_page = DuckDuckGoResultPage(browser)
+    assert result == result_page.search_input_value()
+
 
 @then(parsers.parse('the search result links pertain to "{phrases}"'))
 @then('the search result links pertain to "<phrases>"')
@@ -55,3 +53,12 @@ def result_links(browser, phrases):
 def result_text(browser, phrase):
     result_page = DuckDuckGoResultPage(browser)
     assert phrase in result_page.title()
+
+
+@then('the second page result also pertain to the searched term')
+def second_page_search(browser, initial):
+    result_page = DuckDuckGoResultPage(browser)
+    result_page.more_results_button_click()
+    results_have_one(browser, initial)
+    result_links(browser, initial)
+    result_text(browser, initial)
