@@ -23,6 +23,13 @@ def search_phrase(browser, initial):
     search_page.search(initial)
 
 
+@given(parsers.parse('the user writes "{initial}" in search input'))
+@given('the user writes "<initial>" in search input')
+def search_input(browser, initial):
+    search_page = DuckDuckGoSearchPage(browser)
+    search_page.set_search_input(initial)
+
+
 # Then Steps
 
 @then('the search result query, link and title is like the searched term')
@@ -62,3 +69,11 @@ def second_page_search(browser, initial):
     results_have_one(browser, initial)
     result_links(browser, initial)
     result_text(browser, initial)
+
+
+@then('the written term pertain to the auto-complete suggestion')
+def check_auto_complete(browser, initial):
+    search_page = DuckDuckGoSearchPage(browser)
+    results = search_page.auto_complete_results()
+    matches = [t for t in results if initial in t]
+    assert len(matches) > 0

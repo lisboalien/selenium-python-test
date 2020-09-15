@@ -21,3 +21,7 @@ Feature: Searching for a term in DuckDuckGo page
       | initial  |
       | duck     | 
       | football |
+
+  Scenario: Verifying auto-complete suggestion
+    Given the user writes "panda" in search input
+    Then the written term pertain to the auto-complete suggestion
