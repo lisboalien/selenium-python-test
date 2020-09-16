@@ -23,5 +23,10 @@ Feature: Searching for a term in DuckDuckGo page
       | football |
 
   Scenario: Verifying auto-complete suggestion
-    Given the user writes "panda" in search input
+    Given the user writes "cracker" in search input
     Then the written term pertain to the auto-complete suggestion
+
+  Scenario: Searching by selecting an auto-complete term
+    Given the user writes "cracker" in search input
+    When the user selects one of the auto-complete suggestions
+    Then the search result query, link and title is like the searched term

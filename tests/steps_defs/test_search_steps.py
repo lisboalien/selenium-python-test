@@ -2,7 +2,7 @@
 This module contains step definitions for search.feature
 """
 
-from pytest_bdd import scenarios, given, then, parsers
+from pytest_bdd import scenarios, given, when, then, parsers
 
 from pages.result import DuckDuckGoResultPage
 from pages.search import DuckDuckGoSearchPage
@@ -29,6 +29,13 @@ def search_input(browser, initial):
     search_page = DuckDuckGoSearchPage(browser)
     search_page.set_search_input(initial)
 
+
+# When Steps
+
+@when('the user selects one of the auto-complete suggestions')
+def select_auto_complete_suggestion(browser):
+    search_page = DuckDuckGoSearchPage(browser)
+    search_page.auto_complete_term_selection()
 
 # Then Steps
 
@@ -66,9 +73,7 @@ def result_text(browser, phrase):
 def second_page_search(browser, initial):
     result_page = DuckDuckGoResultPage(browser)
     result_page.more_results_button_click()
-    results_have_one(browser, initial)
-    result_links(browser, initial)
-    result_text(browser, initial)
+    check_search_results(browser, initial)
 
 
 @then('the written term pertain to the auto-complete suggestion')
