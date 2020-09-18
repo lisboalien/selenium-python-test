@@ -37,7 +37,15 @@ def select_auto_complete_suggestion(browser):
     search_page = DuckDuckGoSearchPage(browser)
     search_page.auto_complete_term_selection()
 
+
+@when(parsers.parse('the user searches from result page for "{initial}"'))
+@when('the user searches from result page for "<initial>"')
+def search_from_result_page(browser, initial):
+    result_page = DuckDuckGoResultPage(browser)
+    result_page.search(initial)
+
 # Then Steps
+
 
 @then('the search result query, link and title is like the searched term')
 def check_search_results(browser, initial):
@@ -50,7 +58,7 @@ def check_search_results(browser, initial):
 @then('the search result query is "<result>"')
 def results_have_one(browser, result):
     result_page = DuckDuckGoResultPage(browser)
-    assert result == result_page.search_input_value()
+    assert result in result_page.get_search_input_value()
 
 
 @then(parsers.parse('the search result links pertain to "{phrases}"'))
@@ -72,7 +80,7 @@ def result_text(browser, phrase):
 @then('the second page result also pertain to the searched term')
 def second_page_search(browser, initial):
     result_page = DuckDuckGoResultPage(browser)
-    result_page.more_results_button_click()
+    result_page.btn_more_results_click()
     check_search_results(browser, initial)
 
 

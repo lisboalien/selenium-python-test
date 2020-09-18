@@ -12,6 +12,7 @@ class DuckDuckGoResultPage:
 
     RESULT_LINKS = (By.CSS_SELECTOR, 'a.result__a')
     SEARCH_INPUT = (By.ID, 'search_form_input')
+    SEARCH_BUTTON = (By.ID, 'search_button')
     MORE_RESULTS_BUTTON = (By.CSS_SELECTOR, 'a.result--more__btn')
 
     # Initializer
@@ -19,20 +20,33 @@ class DuckDuckGoResultPage:
     def __init__(self, browser):
         self.browser = browser
 
-    # Interactions Methods
+    # Interaction Element Methods
+
+    def set_search_input(self, phrase):
+        search_input = self.browser.find_element(*self.SEARCH_INPUT)
+        search_input.clear
+        search_input.send_keys(phrase)
+
+    def get_search_input_value(self):
+        value = self.browser.find_element(*self.SEARCH_INPUT).get_attribute('value')
+        return value
+
+    def title(self):
+        return self.browser.title
+
+    def btn_search_click(self):
+        self.browser.find_element(*self.SEARCH_BUTTON).click()
+
+    def btn_more_results_click(self):
+        self.browser.find_element(*self.MORE_RESULTS_BUTTON).click()
+
+    # Interaction Action Methods
 
     def result_link_titles(self):
         links = self.browser.find_elements(*self.RESULT_LINKS)
         titles = [link.text for link in links]
         return titles
 
-    def search_input_value(self):
-        search_input = self.browser.find_element(*self.SEARCH_INPUT)
-        value = search_input.get_attribute('value')
-        return value
-
-    def title(self):
-        return self.browser.title
-
-    def more_results_button_click(self):
-        self.browser.find_element(*self.MORE_RESULTS_BUTTON).click()
+    def search(self, phrase):
+        self.set_search_input(phrase)
+        self.btn_search_click()

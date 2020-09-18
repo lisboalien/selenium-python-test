@@ -31,12 +31,10 @@ class DuckDuckGoSearchPage:
         self.browser.get(self.URL)
 
     def set_search_input(self, phrase):
-        search_input = self.browser.find_element(*self.SEARCH_INPUT)
-        search_input.send_keys(phrase)
+        self.browser.find_element(*self.SEARCH_INPUT).send_keys(phrase)
 
     def btn_search_click(self):
-        search_button = self.browser.find_element(*self.SEARCH_BUTTON)
-        search_button.click()
+        self.browser.find_element(*self.SEARCH_BUTTON).click()
 
     # Interaction Action Methods
 

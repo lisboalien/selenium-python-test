@@ -27,6 +27,13 @@ Feature: Searching for a term in DuckDuckGo page
     Then the written term pertain to the auto-complete suggestion
 
   Scenario: Searching by selecting an auto-complete term
-    Given the user writes "cracker" in search input
+    Given the user writes "development" in search input
     When the user selects one of the auto-complete suggestions
     Then the search result query, link and title is like the searched term
+
+  Scenario: Searching from the result page
+    Given the user searches for "red panda"
+    When the user searches from result page for "bear"
+    Then the search result query is "bear"
+    And the search result links pertain to "bear"
+    And the search result title contains "bear"
