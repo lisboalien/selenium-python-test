@@ -11,9 +11,11 @@ class DuckDuckGoResultPage:
     # Locators
 
     RESULT_LINKS = (By.CSS_SELECTOR, 'a.result__a')
+    RESULT_IMAGES = (By.CSS_SELECTOR, 'span.tile--img__title')
     SEARCH_INPUT = (By.ID, 'search_form_input')
     SEARCH_BUTTON = (By.ID, 'search_button')
     MORE_RESULTS_BUTTON = (By.CSS_SELECTOR, 'a.result--more__btn')
+    IMAGES_BUTTON = (By.CSS_SELECTOR, 'a.js-zci-link--images')
 
     # Initializer
 
@@ -40,10 +42,18 @@ class DuckDuckGoResultPage:
     def btn_more_results_click(self):
         self.browser.find_element(*self.MORE_RESULTS_BUTTON).click()
 
+    def btn_images_click(self):
+        self.browser.find_element(*self.IMAGES_BUTTON).click()
+
     # Interaction Action Methods
 
     def result_link_titles(self):
         links = self.browser.find_elements(*self.RESULT_LINKS)
+        titles = [link.text for link in links]
+        return titles
+
+    def result_image_titles(self):
+        links = self.browser.find_elements(*self.RESULT_IMAGES)
         titles = [link.text for link in links]
         return titles
 

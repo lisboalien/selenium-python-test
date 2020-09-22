@@ -38,6 +38,12 @@ def select_auto_complete_suggestion(browser):
     search_page.auto_complete_term_selection()
 
 
+@when('the user changes to image search')
+def changing_to_image_search(browser):
+    result_page = DuckDuckGoResultPage(browser)
+    result_page.btn_images_click()
+
+
 @when(parsers.parse('the user searches from result page for "{initial}"'))
 @when('the user searches from result page for "<initial>"')
 def search_from_result_page(browser, initial):
@@ -89,4 +95,12 @@ def check_auto_complete(browser, initial):
     search_page = DuckDuckGoSearchPage(browser)
     results = search_page.auto_complete_results()
     matches = [t for t in results if initial in t]
+    assert len(matches) > 0
+
+
+@then('the search result images pertain to the searched term')
+def check_result_images(browser, initial):
+    result_page = DuckDuckGoResultPage(browser)
+    titles = result_page.result_image_titles()
+    matches = [t for t in titles if initial in t]
     assert len(matches) > 0

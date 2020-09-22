@@ -37,3 +37,8 @@ Feature: Searching for a term in DuckDuckGo page
     Then the search result query is "bear"
     And the search result links pertain to "bear"
     And the search result title contains "bear"
+
+  Scenario: Image search
+    Given the user searches for "car"
+    When the user changes to image search
+    Then the search result images pertain to the searched term
