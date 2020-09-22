@@ -18,9 +18,9 @@ Feature: Searching for a term in DuckDuckGo page
     And the second page result also pertain to the searched term
 
     Examples:
-      | initial  |
-      | duck     | 
-      | football |
+      | initial |
+      | duck    |
+      | ball    |
 
   Scenario: Verifying auto-complete suggestion
     Given the user writes "cracker" in search input
@@ -42,3 +42,8 @@ Feature: Searching for a term in DuckDuckGo page
     Given the user searches for "car"
     When the user changes to image search
     Then the search result images pertain to the searched term
+
+  Scenario: Video search
+    Given the user searches for "car"
+    When the user changes to video search
+    Then the search result videos pertain to the searched term
