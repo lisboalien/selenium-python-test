@@ -4,7 +4,6 @@ the page object for the DuckDuckGo search result page
 """
 
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 
 
 class DuckDuckGoResultPage:
@@ -13,11 +12,13 @@ class DuckDuckGoResultPage:
     RESULT_LINKS = (By.CSS_SELECTOR, 'a.result__a')
     RESULT_IMAGES = (By.CSS_SELECTOR, 'span.tile--img__title')
     RESULT_VIDEOS = (By.XPATH, '//h6/a')
+    RESULT_NEWS = (By.XPATH, '//div[contains(@class, "result--news")]//h2/a[1]')
     SEARCH_INPUT = (By.ID, 'search_form_input')
     SEARCH_BUTTON = (By.ID, 'search_button')
     MORE_RESULTS_BUTTON = (By.CSS_SELECTOR, 'a.result--more__btn')
     IMAGES_BUTTON = (By.CSS_SELECTOR, 'a.js-zci-link--images')
     VIDEOS_BUTTON = (By.CSS_SELECTOR, 'a.js-zci-link--videos')
+    NEWS_BUTTON = (By.CSS_SELECTOR, 'a.js-zci-link--news')
 
     # Initializer
 
@@ -51,6 +52,9 @@ class DuckDuckGoResultPage:
     def btn_videos_click(self):
         self.browser.find_element(*self.VIDEOS_BUTTON).click()
 
+    def btn_news_click(self):
+        self.browser.find_element(*self.NEWS_BUTTON).click()
+
     # Interaction Action Methods
 
     def result_link_titles(self):
@@ -65,6 +69,11 @@ class DuckDuckGoResultPage:
 
     def result_videos_titles(self):
         links = self.browser.find_elements(*self.RESULT_VIDEOS)
+        titles = [link.text for link in links]
+        return titles
+
+    def result_news_titles(self):
+        links = self.browser.find_elements(*self.RESULT_NEWS)
         titles = [link.text for link in links]
         return titles
 

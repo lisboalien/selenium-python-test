@@ -51,6 +51,12 @@ def changing_to_video_search(browser):
     result_page.btn_videos_click()
 
 
+@when('the user changes to news search')
+def changing_to_news_search(browser):
+    result_page = DuckDuckGoResultPage(browser)
+    result_page.btn_news_click()
+
+
 @when(parsers.parse('the user searches from result page for "{initial}"'))
 @when('the user searches from result page for "<initial>"')
 def search_from_result_page(browser, initial):
@@ -118,4 +124,12 @@ def check_result_videos(browser, initial):
     result_page = DuckDuckGoResultPage(browser)
     common = CommonPage(browser)
     titles = result_page.result_videos_titles()
+    assert common.list_matches(initial, titles)
+
+
+@then('the search result news pertain to the searched term')
+def check_result_news(browser, initial):
+    result_page = DuckDuckGoResultPage(browser)
+    common = CommonPage(browser)
+    titles = result_page.result_news_titles()
     assert common.list_matches(initial, titles)

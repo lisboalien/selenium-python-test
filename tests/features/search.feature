@@ -47,3 +47,8 @@ Feature: Searching for a term in DuckDuckGo page
     Given the user searches for "car"
     When the user changes to video search
     Then the search result videos pertain to the searched term
+
+  Scenario: News search
+    Given the user searches for "bicicle"
+    When the user changes to news search
+    Then the search result news pertain to the searched term
