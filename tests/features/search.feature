@@ -52,3 +52,9 @@ Feature: Searching for a term in DuckDuckGo page
     Given the user searches for "bicicle"
     When the user changes to news search
     Then the search result news pertain to the searched term
+
+  Scenario: Changing settings
+    Given the user searches for "lalala"
+    When the user access the settings dropdown menu
+    And the user disables the site icons configuration
+    Then the site icons are not displayed anymore
