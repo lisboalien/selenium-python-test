@@ -9,7 +9,7 @@ from random import choice
 from pages.common import CommonPage
 
 
-class DuckDuckGoResultPage:
+class DuckDuckGoResultPage(CommonPage):
     # Locators
 
     RESULT_LINKS = (By.CSS_SELECTOR, 'a.result__a')
@@ -36,7 +36,7 @@ class DuckDuckGoResultPage:
     # Initializer
 
     def __init__(self, browser):
-        self.browser = browser
+        super().__init__(browser)
 
     # Interaction Element Methods
 
@@ -124,9 +124,7 @@ class DuckDuckGoResultPage:
         self.btn_search_click()
 
     def select_country(self, browser, region):
-        common = CommonPage(browser)
-
         self.switch_result_per_region()
         countries = self.get_select_box_country_list()
-        country = common.find_webelement_on_list(region, countries)
+        country = self.find_webelement_on_list(region, countries)
         country.click()

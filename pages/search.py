@@ -7,8 +7,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from random import choice
 
+from pages.common import CommonPage
 
-class DuckDuckGoSearchPage:
+
+class DuckDuckGoSearchPage(CommonPage):
 
     # URL
 
@@ -23,7 +25,7 @@ class DuckDuckGoSearchPage:
     # Initializer
 
     def __init__(self, browser):
-        self.browser = browser
+        super().__init__(browser)
 
     # Interaction Element Methods
 
