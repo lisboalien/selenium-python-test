@@ -31,6 +31,13 @@ def search_input(browser, initial):
     search_page.set_search_input(initial)
 
 
+@given(parsers.parse('the user changes the country to "{region}"'))
+@given('the user changes the country to "<region>"')
+def set_result_per_region(browser, region):
+    result_page = DuckDuckGoResultPage(browser)
+    result_page.select_country(browser, region)
+
+
 # When Steps
 
 @when('the user selects one of the auto-complete suggestions')
@@ -153,3 +160,10 @@ def check_site_icons(browser):
     icons_status = result_page.get_result_links_icons_status()
     matches = [status for status in icons_status if 'is-hidden' in status]
     assert len(matches) > 0
+
+
+@then('the selected country changed')
+def check_selected_country(browser, region):
+    result_page = DuckDuckGoResultPage(browser)
+    country = result_page.get_selected_country()
+    assert country == region

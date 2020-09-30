@@ -4,6 +4,9 @@ the page object for the DuckDuckGo search result page
 """
 
 from selenium.webdriver.common.by import By
+from random import choice
+
+from pages.common import CommonPage
 
 
 class DuckDuckGoResultPage:
@@ -20,6 +23,10 @@ class DuckDuckGoResultPage:
     IMAGES_BUTTON = (By.CSS_SELECTOR, 'a.js-zci-link--images')
     VIDEOS_BUTTON = (By.CSS_SELECTOR, 'a.js-zci-link--videos')
     NEWS_BUTTON = (By.CSS_SELECTOR, 'a.js-zci-link--news')
+    RESULT_PER_REGION_SWITCH = (
+        By.CSS_SELECTOR, 'div.js-region-filter-switch > span')
+    REGION_DROPDOWN_BUTTON = (By.CSS_SELECTOR, 'div.dropdown--region > a')
+    COUNTRIES_LIST = (By.XPATH, '//a[contains(@class, "modal__list__link")]')
     SETTINGS_BUTTON = (By.CSS_SELECTOR, 'div.dropdown--settings')
     SITE_ICONS_CHECKBOX = (By.XPATH, '//label[@for="setting_kf"]')
     SITE_ICONS_CONFIG_VALUE = (
@@ -40,12 +47,17 @@ class DuckDuckGoResultPage:
 
     def get_site_icons_config_value(self):
         value = self.browser.find_element(
-            *self.SITE_ICONS_CONFIG_VALUE).get_attribute('class')
+            *self.REGION_DROPDOWN_BUTTON).text
         return value
 
     def get_search_input_value(self):
         value = self.browser.find_element(
             *self.SEARCH_INPUT).get_attribute('value')
+        return value
+
+    def get_selected_country(self):
+        value = self.browser.find_element(
+            *self.REGION_DROPDOWN_BUTTON).get_attribute('innerText')
         return value
 
     def title(self):
@@ -70,8 +82,15 @@ class DuckDuckGoResultPage:
         self.browser.find_element(*self.SETTINGS_BUTTON).click()
 
     def chk_site_icons_click(self):
-        check = self.browser.find_element(*self.SITE_ICONS_CHECKBOX)
-        check.click()
+        self.browser.find_element(*self.SITE_ICONS_CHECKBOX).click()
+
+    def switch_result_per_region(self):
+        self.browser.find_element(*self.RESULT_PER_REGION_SWITCH).click()
+
+    def get_select_box_country_list(self):
+        self.browser.find_element(*self.REGION_DROPDOWN_BUTTON).click()
+        countries = self.browser.find_elements(*self.COUNTRIES_LIST)
+        return countries
 
     # Interaction Action Methods
 
@@ -103,3 +122,11 @@ class DuckDuckGoResultPage:
     def search(self, phrase):
         self.set_search_input(phrase)
         self.btn_search_click()
+
+    def select_country(self, browser, region):
+        common = CommonPage(browser)
+
+        self.switch_result_per_region()
+        countries = self.get_select_box_country_list()
+        country = common.find_webelement_on_list(region, countries)
+        country.click()

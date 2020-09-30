@@ -49,6 +49,5 @@ class DuckDuckGoSearchPage:
 
     def auto_complete_term_selection(self):
         results = self.browser.find_elements(*self.AUTO_COMPLETE_RESULTS)
-        test = choice(results)
-        text = test.text
-        test.click()
+        random_result = choice(results)
+        random_result.click()

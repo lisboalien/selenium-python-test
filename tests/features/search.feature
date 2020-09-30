@@ -58,3 +58,8 @@ Feature: Searching for a term in DuckDuckGo page
     When the user access the settings dropdown menu
     And the user disables the site icons configuration
     Then the site icons are not displayed anymore
+
+  Scenario: Changing region
+    Given the user searches for "country"
+    And the user changes the country to "Argentina"
+    Then the selected country changed
