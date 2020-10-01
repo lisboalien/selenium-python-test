@@ -67,7 +67,7 @@ class DuckDuckGoResultPage(CommonPage):
             *self.BUTTON_REGION_DROPDOWN).get_attribute('innerText')
         return value
 
-    def title(self):
+    def get_browser_title(self):
         return self.browser.title
 
     def btn_search_click(self):
@@ -88,35 +88,30 @@ class DuckDuckGoResultPage(CommonPage):
     def btn_settings_click(self):
         self.browser.find_element(*self.BUTTON_SETTINGS).click()
 
-    def chk_site_icons_click(self):
+    def swich_site_icons_click(self):
         self.browser.find_element(*self.SWITCH_SITE_ICONS).click()
 
-    def switch_result_per_region(self):
+    def switch_result_per_region_click(self):
         self.browser.find_element(*self.SWITCH_RESULT_PER_REGION).click()
-
-    def get_select_box_country_list(self):
-        self.browser.find_element(*self.BUTTON_REGION_DROPDOWN).click()
-        countries = self.browser.find_elements(*self.LIST_COUNTRIES)
-        return countries
 
     # Interaction Action Methods
 
-    def result_link_titles(self):
+    def get_result_link_titles(self):
         links = self.browser.find_elements(*self.LIST_RESULT_LINKS)
         titles = [link.text for link in links]
         return titles
 
-    def result_image_titles(self):
+    def get_result_image_titles(self):
         links = self.browser.find_elements(*self.LIST_RESULT_IMAGES)
         titles = [link.text for link in links]
         return titles
 
-    def result_videos_titles(self):
+    def get_result_videos_titles(self):
         links = self.browser.find_elements(*self.LIST_RESULT_VIDEOS)
         titles = [link.text for link in links]
         return titles
 
-    def result_news_titles(self):
+    def get_result_news_titles(self):
         links = self.browser.find_elements(*self.LIST_RESULT_NEWS)
         titles = [link.text for link in links]
         return titles
@@ -126,12 +121,17 @@ class DuckDuckGoResultPage(CommonPage):
         icons_status = [link.get_attribute('class') for link in icons]
         return icons_status
 
-    def search(self, phrase):
-        self.set_search_input(phrase)
-        self.btn_search_click()
+    def get_select_box_country_list(self):
+        self.browser.find_element(*self.BUTTON_REGION_DROPDOWN).click()
+        countries = self.browser.find_elements(*self.LIST_COUNTRIES)
+        return countries
 
-    def select_country(self, browser, region):
-        self.switch_result_per_region()
+    def select_country(self, region):
+        self.switch_result_per_region_click()
         countries = self.get_select_box_country_list()
         country = self.find_webelement_on_list(region, countries)
         country.click()
+
+    def search(self, phrase):
+        self.set_search_input(phrase)
+        self.btn_search_click()
