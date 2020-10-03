@@ -79,6 +79,17 @@ Use Ctrl-C to kill them.
 4. Run `pipenv run python -m pytest` to verify that the framework can run tests.
 5. Create a branch for your code changes. (See *Repository Branching* below.)
 
+
+# Details of the project
+
+## How to run the tests in parallel
+
+If you are running in the terminal:
+* Run `pipenv run python -m pytest -n {n}` where n is the number of CPUs you want to run in 
+
+If you are running with Visual Studio Code
+* Uncomment the `pytest.ini` file and change the configuration `addopts=-n{n}` with the number of CPUs you want to run the tests in
+
 ## About the Author
 
 This project is made by **Aline de Farias Lisboa** or "lisboalien" in social media.
